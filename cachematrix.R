@@ -2,6 +2,7 @@
 ## Functions to create a cached object containing
 ## a matrix and its inverse (CacheMatrix).
 
+## makeCacheMatrix create a new CacheMatrix object.
 # $set() update the cached matrix and clear inverse
 # $get() return cached matrix
 # $setinv(inv) store calculated inverse
