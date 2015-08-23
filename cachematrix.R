@@ -3,6 +3,7 @@
 ## a matrix and its inverse (CacheMatrix).
 
 ## makeCacheMatrix create a new CacheMatrix object.
+# return list of methods:
 # $set() update the cached matrix and clear inverse
 # $get() return cached matrix
 # $setinv(inv) store calculated inverse
@@ -25,8 +26,8 @@ makeCacheMatrix <- function(x = matrix()) {
 
 ## cacheSolve(x,...), return the inverse of the matrix stored in
 ## a CacheMatrix object. Calculate a new inverse if necessary,
-## otherwise return stored value. Extra arguments are passed to
-## solve() only on the first call after setting the 
+## otherwise return stored value. Extra arguments are not passed to
+## solve().
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
   inv <- x$getinv()
@@ -35,7 +36,13 @@ cacheSolve <- function(x, ...) {
     return(inv)
   }
   matdata <- x$get()
-  inv <- solve(matdata, ...)
+  #inv <- solve(matdata, ...) # actually, let's not...
+  inv <- solve(matdata)
   x$setinv(inv)
+  # The reason for not passing extra arguments is they would get used
+  # only the first time and ignored when the cached result is returned.
+  # It's possible to write extra checks to recalculate if they change,
+  # but it would require changing some of the function arguments to
+  # allow storing the options list.
   inv
 }
